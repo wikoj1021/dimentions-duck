@@ -1,26 +1,28 @@
 export class Duck {
-  bornPlace: any;
+  bornPlace: HTMLDivElement;
   isJumping: boolean;
   bottom: number;
-  constructor(bornPlace: any) {
+  initBottom: number;
+  jumpHeight: number;
+  constructor(bornPlace: HTMLDivElement) {
     this.bornPlace = bornPlace;
     this.isJumping = false;
     this.bottom = 50;
+    this.initBottom = 50;
+    this.jumpHeight = 100;
   }
 
   jump(duckContainer: HTMLDivElement) {
     if (this.isJumping) return;
     let upId = setInterval(() => {
-      if (this.bottom === 150) {
+      if (this.bottom === this.initBottom + this.jumpHeight) {
         clearInterval(upId);
-        console.log(this.bottom);
         let timerDownId = setInterval(() => {
           this.bottom -= 10;
           duckContainer.style.bottom = this.bottom + "px";
-          if (this.bottom === 50) {
+          if (this.bottom === this.initBottom) {
             clearInterval(timerDownId);
             this.isJumping = false;
-            console.log(this.bottom);
           }
         }, 20);
       }
@@ -32,7 +34,7 @@ export class Duck {
   init() {
     const duckContainer = document.createElement("div");
     duckContainer.classList.add("duck-container");
-    duckContainer.style.bottom = this.bottom + "px";
+    duckContainer.style.bottom = this.initBottom + "px";
 
     const duck = document.createElement("div");
     duck.classList.add("duck");
