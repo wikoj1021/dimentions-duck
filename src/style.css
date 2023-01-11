@@ -42,6 +42,7 @@ h1 {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  position: relative;
 }
 
 .logo {
@@ -81,6 +82,20 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* IT'S DUCKY TIME */
+.duck-container {
+  height: 150px;
+  width: 80px;
+  position: absolute;
+  left: 20%;
+}
+.duck {
+  position: relative;
+  background-color: rgb(220, 239, 18);
+  height: 100%;
+  width: 100%;
 }
 
 @media (prefers-color-scheme: light) {
