@@ -1,5 +1,19 @@
 let generationInterval: number;
 
+const ADDITIONAL_FEATURE_CHANCES = {
+  HOLE: 0.05,
+  HOLE_EXTENSION: 0.4,
+  MAX_HOLE_EXTENSION: 10,
+  MIN_HOLE_EXTENSION: 4,
+  MIN_DISTANCE_BETWEEN_HOLES: 15,
+};
+
+
+const DEFAULT_RESOLUTION = 10;
+const DEFAULT_FEATURE_LEN = 3;
+const DEFAULT_AMPLITUDE = 20;
+const DEFAULT_REFRESH_TIMER = 100;
+
 export const startGeneration = (
   path: SVGPathElement,
   options?: {
@@ -12,12 +26,15 @@ export const startGeneration = (
   if (!path.parentElement) return;
 
   const MAX_POINTS =
-    path.parentElement.clientWidth / (options?.resolution ?? 10);
-  const FEATURE_LENGTH = options?.terrainFeatureLength ?? 3;
-  const MAX_AMPLITUDE = options?.maxAmplitude ?? 20;
+    path.parentElement.clientWidth / (options?.resolution ?? DEFAULT_RESOLUTION);
+  const FEATURE_LENGTH = options?.terrainFeatureLength ?? DEFAULT_FEATURE_LEN;
+  const MAX_AMPLITUDE = options?.maxAmplitude ?? DEFAULT_AMPLITUDE;
 
   const points: number[] = [250];
   let currentPoint = 0;
+  let generatingHole = false;
+  let currentHoleSize = 0;
+  let lastHoleDistance = 0;
 
   const interpolateCos = (a: number, b: number, x: number) => {
     const ft = x * Math.PI;
@@ -53,12 +70,38 @@ export const startGeneration = (
           MAX_AMPLITUDE;
     }
 
-    points.unshift(point);
+    points.push(point);
     currentPoint++;
   };
 
+  const holeGeneration = () => {
+    if (currentHoleSize > ADDITIONAL_FEATURE_CHANCES.MAX_HOLE_EXTENSION) {
+      generatingHole = false;
+      currentHoleSize = 0;
+    } else if (generatingHole) {
+      generatingHole =
+        currentHoleSize < ADDITIONAL_FEATURE_CHANCES.MIN_HOLE_EXTENSION ||
+        Math.random() <= ADDITIONAL_FEATURE_CHANCES.HOLE_EXTENSION;
+    } else if (
+      lastHoleDistance > ADDITIONAL_FEATURE_CHANCES.MIN_DISTANCE_BETWEEN_HOLES
+    ) {
+      generatingHole = Math.random() < ADDITIONAL_FEATURE_CHANCES.HOLE;
+    }
+
+    if (generatingHole) {
+      points.push(500);
+      currentHoleSize++;
+      lastHoleDistance = 0;
+    } else {
+      currentHoleSize = 0;
+      lastHoleDistance++;
+    }
+  };
+
   const step = () => {
-    getNextPerlinNoise();
+    points.shift();
+    holeGeneration();
+    if (!generatingHole) getNextPerlinNoise();
     path?.setAttribute("d", makePathFromPoints());
   };
 
@@ -68,7 +111,7 @@ export const startGeneration = (
 
   generationInterval = window.setInterval(
     step,
-    options?.generationSpeed ?? 100
+    options?.generationSpeed ?? DEFAULT_REFRESH_TIMER
   );
   return generationInterval;
 };
