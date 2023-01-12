@@ -1,13 +1,10 @@
 import "./style.css";
 import { startGeneration } from "./perlinNoise";
 import { Duck } from "./Duck";
-import { Grass } from "./Grass";
 
-const app = document.getElementById("app");
+const map = document.getElementById("map") as unknown as SVGPathElement;
 const worldPath = document.getElementById("world") as unknown as SVGPathElement;
-const duck = new Duck(app as HTMLDivElement);
-const grass = new Grass(app as HTMLDivElement);
+const duck = new Duck(map as SVGPathElement);
 
 startGeneration(worldPath);
-grass.init();
 duck.init();
