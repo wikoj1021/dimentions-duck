@@ -8,11 +8,10 @@ const ADDITIONAL_FEATURE_CHANCES = {
   MIN_DISTANCE_BETWEEN_HOLES: 15,
 };
 
-
 const DEFAULT_RESOLUTION = 10;
 const DEFAULT_FEATURE_LEN = 3;
 const DEFAULT_AMPLITUDE = 20;
-const DEFAULT_REFRESH_TIMER = 100;
+const PATH_SPEED = 777;
 
 export const startGeneration = (
   path: SVGPathElement,
@@ -25,12 +24,14 @@ export const startGeneration = (
 ) => {
   if (!path.parentElement) return;
 
-  const MAX_POINTS =
-    path.parentElement.clientWidth / (options?.resolution ?? DEFAULT_RESOLUTION);
+  const svgElement = path.parentElement;
+
+  const RESOLUTION = options?.resolution ?? DEFAULT_RESOLUTION;
+  const MAX_POINTS = path.parentElement.clientWidth / RESOLUTION + 2;
   const FEATURE_LENGTH = options?.terrainFeatureLength ?? DEFAULT_FEATURE_LEN;
   const MAX_AMPLITUDE = options?.maxAmplitude ?? DEFAULT_AMPLITUDE;
 
-  const points: number[] = [250];
+  const points: number[] = [svgElement.clientHeight / 2];
   let currentPoint = 0;
   let generatingHole = false;
   let currentHoleSize = 0;
@@ -45,7 +46,7 @@ export const startGeneration = (
   const makePathFromPoints = () => {
     return points.reduce((path, point, i) => {
       if (i === 0) path = `M 0, ${point}`;
-      path += `L ${i * (500 / MAX_POINTS)}, ${point}`;
+      path += `L ${RESOLUTION * i}, ${point}`;
       return path;
     }, "");
   };
@@ -108,11 +109,29 @@ export const startGeneration = (
   for (let i = 0; i < MAX_POINTS; i++) {
     getNextPerlinNoise();
   }
+  path?.setAttribute("d", makePathFromPoints());
 
-  generationInterval = window.setInterval(
-    step,
-    options?.generationSpeed ?? DEFAULT_REFRESH_TIMER
-  );
+  let lastTime = Date.now();
+  const translatePath = () => {
+    const time = Date.now();
+    const timeElapsed = time - lastTime;
+    let translation = (PATH_SPEED * timeElapsed) / 1000;
+
+    if (translation >= RESOLUTION) lastTime = time;
+
+    while (translation >= RESOLUTION) {
+      step();
+      translation -= RESOLUTION;
+    }
+
+    // console.log(translation);
+
+    path.setAttribute('transform', `translate(${-translation}, 0)`)
+
+    window.requestAnimationFrame(translatePath);
+  };
+
+  window.requestAnimationFrame(translatePath);
   return generationInterval;
 };
 
