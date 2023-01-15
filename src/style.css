@@ -95,3 +95,210 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* PORTAL ANIMATIONS */
+.rasengan {
+  animation: rasengan 0.2s linear infinite;
+}
+
+.rasengan2 {
+  animation: rasengan2 0.2s linear infinite;
+}
+
+.rasengan3 {
+  animation: rasengan3 0.2s linear infinite;
+}
+
+.rasengan4 {
+  animation: rasengan4 0.2s linear infinite;
+}
+
+.rasengan5 {
+  animation: rasengan5 0.5s linear infinite;
+}
+.rasengan6 {
+  animation: rasengan6 0.3s linear infinite;
+}
+.rasengan7 {
+  animation: rasengan7 0.3s linear infinite;
+}
+
+.rasengan8 {
+  animation: rasengan8 0.2s linear infinite;
+}
+
+@keyframes rasengan {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  25% {
+    transform: translate(0%, 12%);
+  }
+
+  50% {
+    transform: translate(10%, 13%);
+  }
+
+  75% {
+    transform: translate(10%, 0%);
+  }
+
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+
+@keyframes rasengan2 {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  25% {
+    transform: translate(5%, 0%);
+  }
+
+  50% {
+    transform: translate(5%, 5%);
+  }
+
+  75% {
+    transform: translate(0%, 5%);
+  }
+
+  100% {
+    transform: translate(0.2%, 0%);
+  }
+}
+
+@keyframes rasengan3 {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  25% {
+    transform: translate(-3%, 6%);
+  }
+
+  50% {
+    transform: translate(0%, 12%);
+  }
+
+  75% {
+    transform: translate(5%, 8%);
+  }
+
+  100% {
+    transform: translate(0%, 2%);
+  }
+}
+
+@keyframes rasengan4 {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  25% {
+    transform: translate(-1%, 6%);
+  }
+
+  50% {
+    transform: translate(0%, 12%);
+  }
+
+  75% {
+    transform: translate(5%, 8%);
+  }
+
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+
+@keyframes rasengan5 {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  25% {
+    transform: translate(-7%, 8%);
+  }
+
+  50% {
+    transform: translate(0%, 16%);
+  }
+
+  75% {
+    transform: translate(7%, 8%);
+  }
+
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+
+@keyframes rasengan6 {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  25% {
+    transform: translate(6%, 7%);
+  }
+
+  50% {
+    transform: translate(0%, 14%);
+  }
+
+  75% {
+    transform: translate(-6%, 7%);
+  }
+
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+
+@keyframes rasengan7 {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  25% {
+    transform: translate(5%, 0%);
+  }
+
+  50% {
+    transform: translate(10%, 0%);
+  }
+
+  75% {
+    transform: translate(5%, 4%);
+  }
+
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
+
+@keyframes rasengan8 {
+  0% {
+    transform: translate(0%, 0%);
+  }
+
+  10% {
+    transform: translate(2%, -2%);
+  }
+
+  40% {
+    transform: translate(7%, 2%);
+  }
+
+  70% {
+    transform: translate(5%, 11%);
+  }
+
+  100% {
+    transform: translate(0%, 0%);
+  }
+}
