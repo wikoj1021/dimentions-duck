@@ -84,40 +84,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* IT'S DUCKY TIME */
-.duck-container {
-  height: 150px;
-  width: 60px;
-  position: absolute;
-  left: 20%;
-}
-.duck {
-  position: relative;
-  background-color: rgb(220, 239, 18);
-  height: 100%;
-  width: 100%;
-}
-
-.grass {
-  position: absolute;
-  bottom: 0;
-  height: 100px;
-  width: 500px;
-  z-index: -5;
-  background-color: rgb(16, 117, 34);
-  border-top: 7px solid black;
-}
-
-.rock {
-  position: absolute;
-  width: 40px;
-  height: 30px;
-  border-radius: 20px;
-  bottom: 60px;
-  background-color: rgb(28, 18, 7);
-  z-index: -10;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
